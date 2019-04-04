@@ -1,2 +1,4 @@
-int a = 3;
-int b = 4
+/*Hello World*/
+fun main() {
+    println("Hello World!")
+}

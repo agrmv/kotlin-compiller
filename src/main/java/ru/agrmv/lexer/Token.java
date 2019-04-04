@@ -35,7 +35,7 @@ public class Token {
     @Override
     public String toString() {
         if (!this.getTokenType().isAuxiliary())
-            return tokenType + "  '" + tokenString + "' ["+ line + ";" + beginIndex + "] ";
+            return tokenType + "  '" + tokenString + "' [" + line + ";" + beginIndex + "] ";
         else
             return tokenType + "   [" + line + ";" + beginIndex + "] ";
     }

@@ -11,13 +11,13 @@ public enum TokenType {
 
     NewLine,
 
-    CloseBrace,
+    RightParen,
 
-    OpenBrace,
+    LeftPare,
 
-    OpeningCurlyBrace,
+    LeftBrace,
 
-    ClosingCurlyBrace,
+    RightBrace,
 
     DoubleConstant,
 
@@ -43,10 +43,6 @@ public enum TokenType {
 
     Less,
 
-    Public,
-
-    Private,
-
     Int,
 
     Double,
@@ -60,6 +56,8 @@ public enum TokenType {
     Null,
 
     Return,
+
+    Function,
 
     Class,
 

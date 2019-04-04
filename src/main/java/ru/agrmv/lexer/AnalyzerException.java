@@ -4,6 +4,7 @@ package ru.agrmv.lexer;
 public class AnalyzerException extends Exception {
 
     private int errorPosition;
+    private int errorLine;
 
     private String message;
 
@@ -11,8 +12,9 @@ public class AnalyzerException extends Exception {
         this.errorPosition = errorPosition;
     }
 
-    AnalyzerException(String message, int errorPosition) {
+    AnalyzerException(String message, int errorPosition, int errorLine) {
         this.errorPosition = errorPosition;
+        this.errorLine = errorLine;
         this.message = message;
     }
 

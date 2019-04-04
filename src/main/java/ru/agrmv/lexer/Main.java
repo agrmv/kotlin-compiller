@@ -11,7 +11,8 @@ public class Main {
         try {
             Files.lines(Paths.get("src/main/resources/test.txt"), StandardCharsets.UTF_8).forEach(s -> {
                 try {
-                    lexer.tokenize(s);
+                    if(!s.isEmpty())
+                        lexer.tokenize(s);
                 } catch (AnalyzerException e) {
                     e.printStackTrace();
                 }
