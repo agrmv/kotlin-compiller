@@ -7,11 +7,10 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 class Lexer {
     private Map<TokenType, String> regex;
-
     private List<Token> result;
+    private int line = 0;
 
     Lexer() {
         regex = new TreeMap<>();
@@ -21,6 +20,7 @@ class Lexer {
 
     void tokenize(String source) throws AnalyzerException {
         int position = 0;
+        line++;
         Token token;
         do {
             token = separateToken(source, position);
@@ -44,15 +44,13 @@ class Lexer {
             throw new IllegalArgumentException("Illegal index in the input stream!");
         }
         for (TokenType tokenType : TokenType.values()) {
-            Pattern p = Pattern.compile(".{" + fromIndex + "}" + regex.get(tokenType),
-                    Pattern.DOTALL);
+            Pattern p = Pattern.compile(".{" + fromIndex + "}" + regex.get(tokenType), Pattern.DOTALL);
             Matcher m = p.matcher(source);
             if (m.matches()) {
                 String lexema = m.group(1);
-                return new Token(fromIndex, fromIndex + lexema.length(), lexema, tokenType);
+                return new Token(line, fromIndex, fromIndex + lexema.length(), lexema, tokenType);
             }
         }
-
         return null;
     }
 

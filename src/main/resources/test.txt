@@ -1,2 +1,2 @@
-int a = 1;
-double b = 2;
+int a = 3;
+int b = 4

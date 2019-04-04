@@ -3,10 +3,12 @@ package ru.agrmv.lexer;
 public class Token {
     private int beginIndex;
     private int endIndex;
+    private int line;
     private TokenType tokenType;
     private String tokenString;
 
-    Token(int beginIndex, int endIndex, String tokenString, TokenType tokenType) {
+    Token(int line, int beginIndex, int endIndex, String tokenString, TokenType tokenType) {
+        this.line = line;
         this.beginIndex = beginIndex;
         this.endIndex = endIndex;
         this.tokenType = tokenType;
@@ -33,8 +35,8 @@ public class Token {
     @Override
     public String toString() {
         if (!this.getTokenType().isAuxiliary())
-            return tokenType + "  '" + tokenString + "' [" + beginIndex + ";" + endIndex + "] ";
+            return tokenType + "  '" + tokenString + "' ["+ line + ";" + beginIndex + "] ";
         else
-            return tokenType + "   [" + beginIndex + ";" + endIndex + "] ";
+            return tokenType + "   [" + line + ";" + beginIndex + "] ";
     }
 }

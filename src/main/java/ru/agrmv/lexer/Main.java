@@ -1,22 +1,22 @@
 package ru.agrmv.lexer;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Main {
-    private static String readFile(String path, Charset encoding) throws IOException {
-        byte[] encoded = Files.readAllBytes(Paths.get(path));
-        return new String(encoded, encoding);
-    }
-
     public static void main(String[] args) {
         Lexer lexer = new Lexer();
         try {
-            String input = readFile("src/main/resources/test.txt", Charset.defaultCharset());
-            lexer.tokenize(input);
-        } catch (IOException | AnalyzerException e) {
+            Files.lines(Paths.get("src/main/resources/test.txt"), StandardCharsets.UTF_8).forEach(s -> {
+                try {
+                    lexer.tokenize(s);
+                } catch (AnalyzerException e) {
+                    e.printStackTrace();
+                }
+            });
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
             int i = 0;
@@ -34,8 +34,6 @@ public class Main {
 
 /**
  * TODO LIST
- * перенести считывание из файла в отдельный файл
  * аннотации
  * добавить ключевые токены котлина
- * добавить определение номера строки строки
  * */
