@@ -1,20 +1,42 @@
 package ru.agrmv.lexer;
 
+/**
+ * Класс {@code Token} представляет токен(лексему)
+ * Токен это строка символов классифицированная по правилам.
+ * @author Aleksey Gromov
+ *
+ * */
 public class Token {
+    /**Начальный индекс входного токена*/
     private int beginIndex;
+
+    /**Конечный индекс входного токена*/
     private int endIndex;
-    private int line;
+
+    /**Индекс строки входного токена*/
+    private int lineIndex;
+
+    /**Тип токена*/
     private TokenType tokenType;
+
+    /**Символьное представление токена*/
     private String tokenString;
 
-    Token(int line, int beginIndex, int endIndex, String tokenString, TokenType tokenType) {
-        this.line = line;
+    /**
+     * Создает новый объект класса {@code Token} с указанными параметрами
+     * @param lineIndex индекс строки входного токена
+     * @param beginIndex начальный индекс входного токена
+     * @param endIndex конечный индекс входного токена
+     * @param tokenString строка символов
+     * @param tokenType тип токена
+     * */
+    Token(int lineIndex, int beginIndex, int endIndex, String tokenString, TokenType tokenType) {
+        this.lineIndex = lineIndex;
         this.beginIndex = beginIndex;
         this.endIndex = endIndex;
         this.tokenType = tokenType;
         this.tokenString = tokenString;
     }
-
 
     public int getBegin() {
         return beginIndex;
@@ -35,8 +57,8 @@ public class Token {
     @Override
     public String toString() {
         if (!this.getTokenType().isAuxiliary())
-            return tokenType + "  '" + tokenString + "' [" + line + ";" + beginIndex + "] ";
+            return tokenType + "  '" + tokenString + "' [" + lineIndex + ";" + beginIndex + "] ";
         else
-            return tokenType + "   [" + line + ";" + beginIndex + "] ";
+            return tokenType + "   [" + lineIndex + ";" + beginIndex + "] ";
     }
 }

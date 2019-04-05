@@ -7,10 +7,19 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**Класс {@code Lexer} представляет лексический анализатор
+ * для языка Kotlin.
+ * @author Aleksey Gromov
+ * */
 class Lexer {
+    /**Сопоставление типа токена с его регулярным выражением*/
     private Map<TokenType, String> regEx;
+
+    /**Список входных токенов*/
     private List<Token> result;
-    private int line = 0;
+
+    /**Индекс строки входного токена*/
+    private int lineIndex = 0;
 
     Lexer() {
         regEx = new TreeMap<>();
@@ -18,29 +27,60 @@ class Lexer {
         result = new ArrayList<>();
     }
 
+    /**
+     * Считывает токены из входного файла и добавляет их в список {@code result}
+     * @param source входной файл
+     * @throws AnalyzerException если встречается лексическая ошибка
+     * */
     void tokenize(String source) throws AnalyzerException {
         int position = 0;
-        line++;
+        lineIndex++;
         Token token;
         do {
             token = separateToken(source, position);
             if (token != null) {
                 position = token.getEnd();
-                if (token.getTokenType() == TokenType.WhiteSpace) {
-                    continue;
-                }
                 result.add(token);
             }
         } while (token != null && position != source.length());
         if (position != source.length()) {
-            throw new AnalyzerException("Lexical error at position # ["+ line +  ";" + position + "]", position, line);
+            throw new AnalyzerException("Lexical error at position # ["+ lineIndex +  ";" + position + "]", position, lineIndex);
         }
     }
 
+    /**
+     * Возвращает последоватеьность токенов
+     *
+     * @return список токенов
+     * */
     List<Token> getTokens() {
         return result;
     }
 
+    /**
+     * Возвращает последовательность токенов без вспомогательных типов
+     * {@code BlockComment}, {@code LineComment}, {@code NewLine}, {@code Tab}, {@code WhiteSpace}
+     *
+     * @return список токенов
+     * */
+    public List<Token> getFilteredTokens() {
+        List<Token> filteredResult = new ArrayList<Token>();
+        for (Token t : this.result) {
+            if (!t.getTokenType().isAuxiliary()) {
+                filteredResult.add(t);
+            }
+        }
+        return filteredResult;
+    }
+
+    /**
+     * Сканирует файла по индексу и возвращает найденный токен
+     *
+     * @param source входной файл
+     * @param  fromIndex индекс с которого начинается сканирование
+     *
+     * @return первый найденный токен, или {@code null}, если токен не найден
+     * */
     private Token separateToken(String source, int fromIndex) {
         if (fromIndex < 0 || fromIndex >= source.length()) {
             throw new IllegalArgumentException("Illegal index in the input stream!");
@@ -50,12 +90,15 @@ class Lexer {
             Matcher m = p.matcher(source);
             if (m.matches()) {
                 String lexema = m.group(1);
-                return new Token(line, fromIndex, fromIndex + lexema.length(), lexema, tokenType);
+                return new Token(lineIndex, fromIndex, fromIndex + lexema.length(), lexema, tokenType);
             }
         }
         return null;
     }
 
+    /**
+     * Создает {@code Map<TokenType, String>} из типов токенов и регулярных выражений
+     * */
     private void launchRegEx() {
         regEx.put(TokenType.BlockComment, "(/\\*.*?\\*/).*");
         regEx.put(TokenType.WhiteSpace, "( ).*");

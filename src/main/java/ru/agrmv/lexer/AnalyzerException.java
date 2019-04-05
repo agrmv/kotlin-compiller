@@ -1,5 +1,11 @@
 package ru.agrmv.lexer;
 
+/**
+ * Класс {@code AnalyzerException} представляет исключения
+ * кторые могут быть вызваны лексическим анализом
+ *
+ * @author Aleksey Gromov
+ * */
 @SuppressWarnings("serial")
 public class AnalyzerException extends Exception {
 
@@ -25,5 +31,9 @@ public class AnalyzerException extends Exception {
     @Override
     public String getMessage() {
         return message;
+    }
+
+    public int getErrorLine() {
+        return errorLine;
     }
 }

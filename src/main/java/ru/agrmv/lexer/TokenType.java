@@ -1,5 +1,10 @@
 package ru.agrmv.lexer;
 
+/**
+ * Класс {@code TokenType} представляет перечисление типов токенов
+ * в языке Kotlin.
+ * @author Aleksey Gromov
+ * */
 public enum TokenType {
     BlockComment,
 
@@ -73,6 +78,10 @@ public enum TokenType {
 
     Identifier;
 
+    /**
+     * Определяет является ли токен вспомогательным
+     * @return {@code true} если токен вспомогательный, иначе {@code false}
+     * */
     public boolean isAuxiliary() {
         return this == BlockComment || this == LineComment || this == NewLine || this == Tab
                 || this == WhiteSpace;

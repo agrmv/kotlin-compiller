@@ -21,7 +21,7 @@ public class Main {
             e.printStackTrace();
         } finally {
             int i = 0;
-            for (Token token : lexer.getTokens()) {
+            for (Token token : lexer.getFilteredTokens()) {
                 if (token.getTokenType().isAuxiliary())
                     System.out.println("   " + token.toString() + "\n");
                 else {
