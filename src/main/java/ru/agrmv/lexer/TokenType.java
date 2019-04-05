@@ -24,6 +24,12 @@ public enum TokenType {
 
     RightBrace,
 
+    Val,
+
+    Var,
+
+    StringConstant,
+
     DoubleConstant,
 
     IntConstant,
@@ -52,7 +58,7 @@ public enum TokenType {
 
     Double,
 
-    Void,
+    String,
 
     False,
 
@@ -71,6 +77,8 @@ public enum TokenType {
     While,
 
     Else,
+
+    Colon,
 
     Semicolon,
 

@@ -63,8 +63,8 @@ class Lexer {
      *
      * @return список токенов
      * */
-    public List<Token> getFilteredTokens() {
-        List<Token> filteredResult = new ArrayList<Token>();
+    List<Token> getFilteredTokens() {
+        List<Token> filteredResult = new ArrayList<>();
         for (Token t : this.result) {
             if (!t.getTokenType().isAuxiliary()) {
                 filteredResult.add(t);
@@ -86,7 +86,11 @@ class Lexer {
             throw new IllegalArgumentException("Illegal index in the input stream!");
         }
         for (TokenType tokenType : TokenType.values()) {
+
+            /**Компилирует регулярное выражение в объект класс {@code Pattern}*/
             Pattern p = Pattern.compile(".{" + fromIndex + "}" + regEx.get(tokenType), Pattern.DOTALL);
+
+            /**Объект {@code Matcher} анализирует строку и ищет соответствие шаблону.*/
             Matcher m = p.matcher(source);
             if (m.matches()) {
                 String lexema = m.group(1);
@@ -104,15 +108,19 @@ class Lexer {
         regEx.put(TokenType.WhiteSpace, "( ).*");
         regEx.put(TokenType.LeftPare, "(\\().*");
         regEx.put(TokenType.RightParen, "(\\)).*");
+        regEx.put(TokenType.Val, "\\b(val)\\b.*");
+        regEx.put(TokenType.Var, "\\b(var)\\b.*");
         regEx.put(TokenType.Semicolon, "(;).*");
+        regEx.put(TokenType.Colon, "(:).*");
         regEx.put(TokenType.Comma, "(,).*");
         regEx.put(TokenType.LeftBrace, "(\\{).*");
         regEx.put(TokenType.RightBrace, "(\\}).*");
+        regEx.put(TokenType.StringConstant, "(\".*?\").*");
         regEx.put(TokenType.DoubleConstant, "\\b(\\d{1,9}\\.\\d{1,32})\\b.*");
         regEx.put(TokenType.IntConstant, "\\b(\\d{1,9})\\b.*");
-        regEx.put(TokenType.Void, "\\b(void)\\b.*");
-        regEx.put(TokenType.Int, "\\b(int)\\b.*");
-        regEx.put(TokenType.Double, "\\b(int|double)\\b.*");
+        regEx.put(TokenType.String, "\\b(String)\\b.*");
+        regEx.put(TokenType.Int, "\\b(Int)\\b.*");
+        regEx.put(TokenType.Double, "\\b(Int|Double)\\b.*");
         regEx.put(TokenType.Tab, "(\\t).*");
         regEx.put(TokenType.NewLine, "(\\n).*");
         regEx.put(TokenType.False, "\\b(false)\\b.*");
@@ -137,3 +145,16 @@ class Lexer {
         regEx.put(TokenType.Identifier, "\\b([a-zA-Z]{1}[0-9a-zA-Z_]{0,31})\\b.*");
     }
 }
+
+/**
+ *   \b граница
+ *   ^     - начало проверяемой строки
+ *   $     - конец проверяемой строки
+ *   .     - представляет собой сокращенную форму записи для символьного класса, совпадающего с любым символом
+ *   |     -  означает «или». Подвыражения, объединенные этим способом, называются альтернативами (alternatives)
+ *   ?     - означает, что предшествующий ему символ является необязательным
+ *   +     -  обозначает «один или несколько экземпляров непосредственно предшествующего элемента
+ *   *     -  любое количество экземпляров элемента (в том числе и нулевое)
+ *   {n}   - Ровно n раз
+ *   dotAll - включает символ новой строки
+ * */
