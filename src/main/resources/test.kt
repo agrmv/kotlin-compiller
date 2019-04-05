@@ -1,7 +1,7 @@
 /* Block comment*/
 // Line comment
 
-fun main() {
+fun main(args: Array<String>) {
     val a: Int = 1
     val b = 1
     var x = 5.5

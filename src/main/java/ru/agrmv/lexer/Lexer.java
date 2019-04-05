@@ -119,6 +119,7 @@ class Lexer {
         regEx.put(TokenType.StringConstant, "(\".*?\").*");
         regEx.put(TokenType.DoubleConstant, "\\b(\\d{1,9}\\.\\d{1,32})\\b.*");
         regEx.put(TokenType.IntConstant, "\\b(\\d{1,9})\\b.*");
+        regEx.put(TokenType.Array, "\\b(Array<Int|Double|String>)\\b.*");
         regEx.put(TokenType.String, "\\b(String)\\b.*");
         regEx.put(TokenType.Int, "\\b(Int)\\b.*");
         regEx.put(TokenType.Double, "\\b(Int|Double)\\b.*");

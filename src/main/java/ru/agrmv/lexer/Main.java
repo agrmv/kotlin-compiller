@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         Lexer lexer = new Lexer();
         try {
-            Files.lines(Paths.get("src/main/resources/test.txt"), StandardCharsets.UTF_8).forEach(s -> {
+            Files.lines(Paths.get("src/main/resources/test.kt"), StandardCharsets.UTF_8).forEach(s -> {
                 try {
                     if(!s.isEmpty())
                         lexer.tokenize(s);
