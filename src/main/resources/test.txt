@@ -1,4 +1,6 @@
-/*Hello World*/
+/* Block comment*/
+// Line comment
+
 fun main() {
     val a: Int = 1
     val b = 1

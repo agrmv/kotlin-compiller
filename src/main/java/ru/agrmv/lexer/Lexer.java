@@ -105,6 +105,7 @@ class Lexer {
      * */
     private void launchRegEx() {
         regEx.put(TokenType.BlockComment, "(/\\*.*?\\*/).*");
+        regEx.put(TokenType.LineComment, "(//.*).*");
         regEx.put(TokenType.WhiteSpace, "( ).*");
         regEx.put(TokenType.LeftPare, "(\\().*");
         regEx.put(TokenType.RightParen, "(\\)).*");
