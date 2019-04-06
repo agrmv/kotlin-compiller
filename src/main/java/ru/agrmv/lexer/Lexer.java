@@ -19,7 +19,7 @@ class Lexer {
     private List<Token> result;
 
     /**Индекс строки входного токена*/
-    private int lineIndex = 0;
+    private int lineIndex;
 
     Lexer() {
         regEx = new TreeMap<>();
@@ -27,14 +27,19 @@ class Lexer {
         result = new ArrayList<>();
     }
 
+    private void setLineIndex(int lineIndex) {
+        this.lineIndex = lineIndex;
+    }
+
     /**
      * Считывает токены из входного файла и добавляет их в список {@code result}
      * @param source входной файл
+     * @param lineIndex индекс входной строки
      * @throws AnalyzerException если встречается лексическая ошибка
      * */
-    void tokenize(String source) throws AnalyzerException {
+    void tokenize(String source, int lineIndex) throws AnalyzerException {
         int position = 0;
-        lineIndex++;
+        setLineIndex(lineIndex);
         Token token;
         do {
             token = separateToken(source, position);
@@ -44,7 +49,7 @@ class Lexer {
             }
         } while (token != null && position != source.length());
         if (position != source.length()) {
-            throw new AnalyzerException("Lexical error at position # ["+ lineIndex +  ";" + position + "]", position, lineIndex);
+            throw new AnalyzerException("Lexical error at position # ["+ this.lineIndex +  ";" + position + "]", position, this.lineIndex);
         }
     }
 

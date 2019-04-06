@@ -38,6 +38,10 @@ public class Token {
         this.tokenString = tokenString;
     }
 
+    public void setLineIndex(int lineIndex) {
+        this.lineIndex = lineIndex;
+    }
+
     public int getBegin() {
         return beginIndex;
     }
