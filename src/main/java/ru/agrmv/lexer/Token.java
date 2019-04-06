@@ -8,10 +8,7 @@ package ru.agrmv.lexer;
  * */
 public class Token {
     /**Начальный индекс входного токена*/
-    private int beginIndex;
-
-    /**Конечный индекс входного токена*/
-    private int endIndex;
+    private int indexInLine;
 
     /**Индекс строки входного токена*/
     private int lineIndex;
@@ -26,28 +23,27 @@ public class Token {
      * Создает новый объект класса {@code Token} с указанными параметрами
      * @param lineIndex индекс строки входного токена
      * @param beginIndex начальный индекс входного токена
-     * @param endIndex конечный индекс входного токена
      * @param tokenString строка символов
      * @param tokenType тип токена
      * */
-    Token(int lineIndex, int beginIndex, int endIndex, String tokenString, TokenType tokenType) {
+    Token(int lineIndex, int beginIndex, String tokenString, TokenType tokenType) {
         this.lineIndex = lineIndex;
-        this.beginIndex = beginIndex;
-        this.endIndex = endIndex;
+        this.indexInLine = beginIndex;
         this.tokenType = tokenType;
         this.tokenString = tokenString;
     }
 
-    public void setLineIndex(int lineIndex) {
+    public void setLineTokenIndex(int lineIndex) {
         this.lineIndex = lineIndex;
     }
 
-    public int getBegin() {
-        return beginIndex;
+    public int getBeginTokenIndex() {
+        return indexInLine;
     }
 
-    int getEnd() {
-        return endIndex;
+    /**Возвращает конечный индекс входного токена*/
+    int getEndTokenIndex() {
+        return indexInLine + tokenString.length();
     }
 
     public String getTokenString() {
@@ -61,8 +57,8 @@ public class Token {
     @Override
     public String toString() {
         if (!this.getTokenType().isAuxiliary())
-            return tokenType + "  '" + tokenString + "' [" + lineIndex + ";" + beginIndex + "] ";
+            return tokenType + "  '" + tokenString + "' [" + lineIndex + ";" + indexInLine + "] ";
         else
-            return tokenType + "   [" + lineIndex + ";" + beginIndex + "] ";
+            return tokenType + "   [" + lineIndex + ";" + indexInLine + "] ";
     }
 }

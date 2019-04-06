@@ -19,16 +19,11 @@ class Lexer {
     private List<Token> result;
 
     /**Индекс строки входного токена*/
-    private int lineIndex;
 
     Lexer() {
         regEx = new TreeMap<>();
         launchRegEx();
         result = new ArrayList<>();
-    }
-
-    private void setLineIndex(int lineIndex) {
-        this.lineIndex = lineIndex;
     }
 
     /**
@@ -38,18 +33,18 @@ class Lexer {
      * @throws AnalyzerException если встречается лексическая ошибка
      * */
     void tokenize(String source, int lineIndex) throws AnalyzerException {
-        int position = 0;
-        setLineIndex(lineIndex);
+        int positionInLine = 0;
         Token token;
         do {
-            token = separateToken(source, position);
+            token = separateToken(source, positionInLine, lineIndex);
             if (token != null) {
-                position = token.getEnd();
+                positionInLine = token.getEndTokenIndex();
                 result.add(token);
             }
-        } while (token != null && position != source.length());
-        if (position != source.length()) {
-            throw new AnalyzerException("Lexical error at position # ["+ this.lineIndex +  ";" + position + "]", position, this.lineIndex);
+        } while (token != null && positionInLine != source.length());
+        if (positionInLine != source.length()) {
+            throw new AnalyzerException("Lexical error at position # ["+
+                    lineIndex +  ";" + positionInLine + "]", positionInLine, lineIndex);
         }
     }
 
@@ -83,10 +78,10 @@ class Lexer {
      *
      * @param source входной файл
      * @param  fromIndex индекс с которого начинается сканирование
-     *
+     * @param lineIndex индекс строки токена
      * @return первый найденный токен, или {@code null}, если токен не найден
      * */
-    private Token separateToken(String source, int fromIndex) {
+    private Token separateToken(String source, int fromIndex, int lineIndex) {
         if (fromIndex < 0 || fromIndex >= source.length()) {
             throw new IllegalArgumentException("Illegal index in the input stream!");
         }
@@ -99,7 +94,7 @@ class Lexer {
             Matcher m = p.matcher(source);
             if (m.matches()) {
                 String lexema = m.group(1);
-                return new Token(lineIndex, fromIndex, fromIndex + lexema.length(), lexema, tokenType);
+                return new Token(lineIndex, fromIndex, lexema, tokenType);
             }
         }
         return null;
