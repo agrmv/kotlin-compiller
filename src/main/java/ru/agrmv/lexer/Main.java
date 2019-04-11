@@ -30,8 +30,7 @@ public class Main {
                 if (token.getTokenType().isAuxiliary())
                     System.out.println("   " + token.toString() + "\n");
                 else {
-                    i++;
-                    System.out.println(i + "   " + token.toString() + "\n");
+                    System.out.println(++i + "   " + token.toString() + "\n");
                 }
             }
         }

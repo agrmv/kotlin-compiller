@@ -8,10 +8,10 @@ package ru.agrmv.lexer;
  * */
 public class Token {
     /**Начальный индекс входного токена*/
-    private int indexInLine;
+    private final int indexInLine;
 
     /**Индекс строки входного токена*/
-    private int lineIndex;
+    private final int lineIndex;
 
     /**Тип токена*/
     private TokenType tokenType;
@@ -31,10 +31,6 @@ public class Token {
         this.indexInLine = beginIndex;
         this.tokenType = tokenType;
         this.tokenString = tokenString;
-    }
-
-    public void setLineTokenIndex(int lineIndex) {
-        this.lineIndex = lineIndex;
     }
 
     public int getBeginTokenIndex() {
