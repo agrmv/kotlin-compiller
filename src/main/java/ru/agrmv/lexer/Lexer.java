@@ -7,18 +7,16 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**Класс {@code Lexer} представляет лексический анализатор
- * для языка Kotlin.
+/**Класс {@code Lexer} представляет лексический анализатор для языка Kotlin.
+ *
  * @author Aleksey Gromov
  * */
 class Lexer {
     /**Сопоставление типа токена с его регулярным выражением*/
-    private Map<TokenType, String> regEx;
+    private final Map<TokenType, String> regEx;
 
     /**Список входных токенов*/
-    private List<Token> result;
-
-    /**Индекс строки входного токена*/
+    private final List<Token> result;
 
     Lexer() {
         regEx = new TreeMap<>();

@@ -17,7 +17,7 @@ public class Token {
     private TokenType tokenType;
 
     /**Символьное представление токена*/
-    private String tokenString;
+    private final String tokenString;
 
     /**
      * Создает новый объект класса {@code Token} с указанными параметрами
@@ -33,7 +33,10 @@ public class Token {
         this.tokenString = tokenString;
     }
 
-    public int getBeginTokenIndex() {
+    public int getLineIndex() {
+        return lineIndex;
+    }
+    public int getIndexInLine() {
         return indexInLine;
     }
 
