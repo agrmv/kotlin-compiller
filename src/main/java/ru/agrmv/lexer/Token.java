@@ -49,7 +49,7 @@ public class Token {
         return tokenString;
     }
 
-    TokenType getTokenType() {
+    public TokenType getTokenType() {
         return tokenType;
     }
 

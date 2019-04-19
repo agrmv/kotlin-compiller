@@ -14,7 +14,7 @@ public class AnalyzerException extends Exception {
 
     private String message;
 
-    AnalyzerException(String message, int errorPositionInLine, int errorLine) {
+    public AnalyzerException(String message, int errorPositionInLine, int errorLine) {
         this.errorPositionInLine = errorPositionInLine;
         this.errorLine = errorLine;
         this.message = message;

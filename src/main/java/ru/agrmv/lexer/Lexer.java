@@ -11,14 +11,14 @@ import java.util.regex.Pattern;
  *
  * @author Aleksey Gromov
  * */
-class Lexer {
+public class Lexer {
     /**Сопоставление типа токена с его регулярным выражением*/
     private final Map<TokenType, String> regEx;
 
     /**Список входных токенов*/
     private final List<Token> result;
 
-    Lexer() {
+    public Lexer() {
         regEx = new TreeMap<>();
         launchRegEx();
         result = new ArrayList<>();
@@ -30,7 +30,7 @@ class Lexer {
      * @param lineIndex индекс входной строки
      * @throws AnalyzerException если встречается лексическая ошибка
      * */
-    void tokenize(String source, int lineIndex) throws AnalyzerException {
+    public void tokenize(String source, int lineIndex) throws AnalyzerException {
         int positionInLine = 0;
         Token token;
         do {
@@ -61,7 +61,7 @@ class Lexer {
      *
      * @return список токенов
      * */
-    List<Token> getFilteredTokens() {
+    public List<Token> getFilteredTokens() {
         List<Token> filteredResult = new ArrayList<>();
         for (Token t : this.result) {
             if (!t.getTokenType().isAuxiliary()) {
@@ -85,10 +85,10 @@ class Lexer {
         }
         for (TokenType tokenType : TokenType.values()) {
 
-            /**Компилирует регулярное выражение в объект класс {@code Pattern}*/
+            /*Компилирует регулярное выражение в объект класс {@code Pattern}*/
             Pattern p = Pattern.compile(".{" + fromIndex + "}" + regEx.get(tokenType), Pattern.DOTALL);
 
-            /**Объект {@code Matcher} анализирует строку и ищет соответствие шаблону.*/
+            /*Объект {@code Matcher} анализирует строку и ищет соответствие шаблону*/
             Matcher m = p.matcher(source);
             if (m.matches()) {
                 String lexema = m.group(1);
@@ -98,9 +98,7 @@ class Lexer {
         return null;
     }
 
-    /**
-     * Создает {@code Map<TokenType, String>} из типов токенов и регулярных выражений
-     * */
+    /**Создает {@code Map<TokenType, String>} из типов токенов и регулярных выражений */
     private void launchRegEx() {
         regEx.put(TokenType.BlockComment, "(/\\*.*?\\*/).*");
         regEx.put(TokenType.LineComment, "(//.*).*");
@@ -146,7 +144,7 @@ class Lexer {
     }
 }
 
-/**
+/*
  *   \b граница
  *   ^     - начало проверяемой строки
  *   $     - конец проверяемой строки
